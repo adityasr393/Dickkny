@@ -1,0 +1,190 @@
+import React from 'react';
+import "../assets/css/bootstrap.min.css";
+import "../assets/css/style.css";
+import Header from './header';
+import Footer from './footer';
+
+class Home extends React.Component {
+    render() {
+        return (
+            <>
+                <Header />
+                <div>
+                    <div className="bg-light-2 pt-4 pb-5 featured mt-5 mb-5">
+                        <div className="container-fluid">
+                            <div className="heading heading-center mb-2">
+                                <h2 className="title">FEATURED PRODUCTS</h2>
+                            </div>
+                            <div className="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                                data-owl-options='{
+                                    "nav": false,
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": true,
+                                    "responsive": {
+                                        "0": {"items":2},
+                                        "480": {"items":2},
+                                        "768": {"items":3},
+                                        "992": {"items":4},
+                                        "1200": {"items":5, "nav": true}
+                                    }
+                                }'>
+                                <div className="product product-7 text-center">
+                                    {/* Product content */}
+                                </div>
+                                {/* Add more products like the one above */}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="banner-group-1 product_news mt-5 mb-5 mt-4">
+                        <h2 className="title text-center mb-2">Trending Products</h2>
+                        <div className="container">
+                            <div className="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                                data-owl-options='{
+                                    "nav": true,
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": true,
+                                    "responsive": {
+                                        "0": {"items":3},
+                                        "480": {"items":3},
+                                        "768": {"items":5},
+                                        "992": {"items":5, "nav": true}
+                                    }
+                                }'>
+                                <div className="product product-7">
+                                    {/* Trending product content */}
+                                </div>
+                                {/* Add more trending products like the one above */}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="container four_section mt-5">
+                        <h2 className="title text-center mb-2">Offers & Sales</h2>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="banner">
+                                    <a href="#">
+                                        <img src={require("../assets/images/banner12.webp")} alt="Banner" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="banner">
+                                    <a href="#">
+                                        <img src={require("../assets/images/banners22.webp")} alt="Banner" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="banner">
+                                    <a href="#">
+                                        <img src={require("../assets/images/mens.jpg")} alt="Banner" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="banner">
+                                    <a href="#">
+                                        <img src={require("../assets/images/womens.jpg")} alt="Banner" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section className="bulk_inqu">
+                        <div className="container">
+                            <div className="cta cta-horizontal cta-horizontal-box bg-image mb-4 mb-lg-6" style={{backgroundImage: "url(assets/images/bulk_bg.jpg)"}}>
+                                <div className="row flex-column flex-lg-row align-items-lg-center">
+                                    <div className="col">
+                                        <h3 className="cta-title text-primary">Streamline Your Procurement Process with Our Bulk Inquiry Service.</h3>
+                                        <p className="cta-desc">Get Simplify your purchasing tasks by submitting bulk inquiries effortlessly. Enjoy competitive pricing and expedited responses for all your procurement needs, saving you time and effort.</p>
+                                    </div>
+                                    <div className="col-auto">
+                                        <a href="bulk-inquery" className="btn btn-white-primary btn-round"><span>Bulk Inquiry</span><i className="icon-long-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="blog-posts mb-5">
+                        <div className="container">
+                            <h2 className="title text-center mb-2">From Our Blog</h2>
+                            <div className="owl-carousel owl-simple mb-3" data-toggle="owl"
+                                data-owl-options='{
+                                    "nav": false,
+                                    "dots": true,
+                                    "items": 3,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {"items":2},
+                                        "600": {"items":2},
+                                        "992": {"items":3}
+                                    }
+                                }'>
+                                <article className="entry">
+                                    <figure className="entry-media">
+                                        <a href="single-blog">
+                                            <img src={require("../assets/images/jeans.jpg")} alt="image desc"/>
+                                        </a>
+                                    </figure>
+                                    <div className="entry-body text-center">
+                                        <div className="entry-meta">
+                                            <a href="#">Nov 22, 2018</a>, 1 Comments
+                                        </div>
+                                        <h3 className="entry-title">
+                                            <a href="single-blog">Sed adipiscing ornare.</a>
+                                        </h3>
+                                        <div className="entry-content">
+                                            <a href="single-blog" className="read-more">Read More</a>
+                                        </div>
+                                    </div>
+                                </article>
+                                {/* Add more blog articles like the one above */}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-light-2 pt-7 pb-6 testimonials">
+                        <div className="container">
+                            <h2 className="title text-center mb-2">Our Customers Say</h2>
+                            <div className="owl-carousel owl-theme owl-testimonials" data-toggle="owl"
+                                data-owl-options='{
+                                    "nav": false,
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": true,
+                                    "responsive": {
+                                        "0": {"items":2},
+                                        "768": {"items":2},
+                                        "992": {"items":3},
+                                        "1200": {"items":3, "nav": true}
+                                    }
+                                }'>
+                                <blockquote className="testimonial testimonial-icon text-center">
+                                    <p>“ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus quet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis. ”</p>
+                                    <cite>
+                                        Jenson Gregory
+                                        <span>Customer</span>
+                                    </cite>
+                                </blockquote>
+                                {/* Add more testimonials like the one above */}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <Footer />
+            </>
+        );
+    }
+}
+
+export default Home;

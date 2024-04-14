@@ -1,0 +1,50 @@
+/* Link Styles */
+a {
+  color: #FBC890; /* Default link color */
+  font-family: 'Poppins'; /* Font family for links */
+  font-size: 1.4rem; /* Font size for links */
+  text-decoration: none; /* Remove underline from links */
+  transition: color 0.3s ease; /* Smooth transition for link color change */
+}
+
+a:hover {
+  color: #007bff; /* Link color on hover */
+  text-decoration: none; /* Remove underline on hover */
+  background-color: transparent; /* Transparent background color on hover */
+}
+
+/* User Agent Styles */
+a:-webkit-any-link {
+  color: -webkit-link; /* Link color for WebKit browsers */
+  cursor: pointer; /* Cursor style for links */
+  text-decoration: underline; /* Underline for links */
+}
+
+/* Global Styles */
+*,
+::after,
+::before {
+  box-sizing: border-box; /* Box-sizing set to border-box globally */
+}
+
+body {
+  font: normal 300 1.4rem / 1.86 "Poppins", sans-serif; /* Font style for the body */
+  color: #666666; /* Default text color for the body */
+  background-color: #fff; /* Default background color for the body */
+  -webkit-font-smoothing: antialiased; /* Smooth font rendering for WebKit browsers */
+  -moz-osx-font-smoothing: grayscale; /* Smooth font rendering for macOS */
+  overflow-x: hidden; /* Hide horizontal overflow */
+}
+
+:root {
+  /* Root variables for colors and breakpoints */
+}
+
+html {
+  font-size: 62.5%; /* Set the base font size to 10px */
+  -webkit-text-size-adjust: 100%; /* Adjust text size for WebKit browsers */
+  -ms-text-size-adjust: 100%; /* Adjust text size for Microsoft browsers */
+  font-size-adjust: 100%; /* Adjust font size */
+}
+
+/* Additional user agent and global styles */
