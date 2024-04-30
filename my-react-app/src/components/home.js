@@ -1,42 +1,97 @@
-import React from 'react';
 import "../assets/css/bootstrap.min.css";
 import "../assets/css/style.css";
+import React, { Component } from 'react';
+import axios from 'axios';
 import Header from './header';
 import Footer from './footer';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-class Home extends React.Component {
+class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            products: []
+        };
+    }
+
+    componentDidMount() {
+        // Fetch featured products
+        axios.get('http://localhost:3000/getAllProduct')
+            .then(response => {
+                // Check if response data contains products array
+                if (response.data && response.data.data) {
+                    this.setState({ products: response.data.data });
+                } else {
+                    console.error('Invalid response format: Missing data array');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+    }
+
     render() {
+        const { products } = this.state;
+
+        const settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 5,
+            slidesToScroll: 1,
+         
+
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 4,
+                    }
+                },
+                {
+                    breakpoint: 992,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2,
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                    }
+                }
+            ]
+        };
+
         return (
             <>
                 <Header />
                 <div>
+                    {/* Render featured products */}
                     <div className="bg-light-2 pt-4 pb-5 featured mt-5 mb-5">
                         <div className="container-fluid">
                             <div className="heading heading-center mb-2">
                                 <h2 className="title">FEATURED PRODUCTS</h2>
                             </div>
-                            <div className="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                                data-owl-options='{
-                                    "nav": false,
-                                    "dots": true,
-                                    "margin": 20,
-                                    "loop": true,
-                                    "responsive": {
-                                        "0": {"items":2},
-                                        "480": {"items":2},
-                                        "768": {"items":3},
-                                        "992": {"items":4},
-                                        "1200": {"items":5, "nav": true}
-                                    }
-                                }'>
-                                <div className="product product-7 text-center">
-                                    {/* Product content */}
-                                </div>
-                                {/* Add more products like the one above */}
-                            </div>
+                            <Slider {...settings}>
+                                {products.map(product => (
+                                    <div className="product product-7 text-center" key={product._id}>
+                                        <h3>{product.name}</h3>
+                                        <img src={product.image} alt={product.name} />
+                                    </div>
+                                ))}
+                            </Slider>
                         </div>
                     </div>
-
+                    {/* Render trending products */}
                     <div className="banner-group-1 product_news mt-5 mb-5 mt-4">
                         <h2 className="title text-center mb-2">Trending Products</h2>
                         <div className="container">
@@ -53,13 +108,13 @@ class Home extends React.Component {
                                         "992": {"items":5, "nav": true}
                                     }
                                 }'>
-                                <div className="product product-7">
-                                    {/* Trending product content */}
-                                </div>
-                                {/* Add more trending products like the one above */}
+
+                         
+                                
                             </div>
                         </div>
                     </div>
+
 
                     <div className="container four_section mt-5">
                         <h2 className="title text-center mb-2">Offers & Sales</h2>
