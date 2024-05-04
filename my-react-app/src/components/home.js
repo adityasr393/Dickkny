@@ -1,13 +1,12 @@
-import "../assets/css/bootstrap.min.css";
-import "../assets/css/style.css";
 import React, { Component } from 'react';
 import axios from 'axios';
-import Header from './header';
-import Footer from './footer';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import "../assets/css/bootstrap.min.css"
+import "../assets/css/style.css"
+import Header from './header';
+import Footer from './footer';
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +31,23 @@ class Home extends Component {
             });
     }
 
+    addToCart = (product) => {
+        const { _id: productId, userId } = product;
+        const quantity = 1; // You can set the quantity as needed
+    
+        axios.post('http://localhost:3000/addToCart', { userId, productId, quantity })
+            .then(response => {
+                // Handle success
+                console.log('Product added to cart:', productId);
+            })
+            .catch(error => {
+                // Handle error
+                console.error('Error adding product to cart:', error);
+            });
+    }
+    
+    
+
     render() {
         const { products } = this.state;
 
@@ -41,8 +57,6 @@ class Home extends Component {
             speed: 500,
             slidesToShow: 5,
             slidesToScroll: 1,
-         
-
             responsive: [
                 {
                     breakpoint: 1200,
@@ -70,27 +84,37 @@ class Home extends Component {
                 }
             ]
         };
-
+        
         return (
             <>
                 <Header />
                 <div>
                     {/* Render featured products */}
                     <div className="bg-light-2 pt-4 pb-5 featured mt-5 mb-5">
-                        <div className="container-fluid">
-                            <div className="heading heading-center mb-2">
-                                <h2 className="title">FEATURED PRODUCTS</h2>
-                            </div>
-                            <Slider {...settings}>
-                                {products.map(product => (
-                                    <div className="product product-7 text-center" key={product._id}>
-                                        <h3>{product.name}</h3>
-                                        <img src={product.image} alt={product.name} />
-                                    </div>
-                                ))}
-                            </Slider>
+    <div className="container-fluid">
+        <div className="heading heading-center mb-2">
+            <h2 className="title">FEATURED PRODUCTS</h2>
+        </div>
+        <Slider {...settings}>
+            {products.map(product => (
+                <div className="product product-7 text-center" key={product._id}>
+                    {/* Add container for image and button */}
+                    <div className="product-image-container" style={{ position: 'relative' }}>
+                        {/* Product Image */}
+                        <img src={product.image} alt={product.name} />
+                        {/* Transparent Add to Cart Button */}
+                        <div className="add-to-cart-btn-container">
+                            <button className="btn btn-transparent" onClick={() => this.addToCart(product)}>Add to Cart</button>
                         </div>
                     </div>
+                    {/* Product Name */}
+                    <h3>{product.name}</h3>
+                </div>
+            ))}
+        </Slider>
+    </div>
+</div>
+
                     {/* Render trending products */}
                     <div className="banner-group-1 product_news mt-5 mb-5 mt-4">
                         <h2 className="title text-center mb-2">Trending Products</h2>
