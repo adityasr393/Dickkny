@@ -7,6 +7,8 @@ import "../assets/css/bootstrap.min.css"
 import "../assets/css/style.css"
 import Header from './header';
 import Footer from './footer';
+import { jwtDecode } from 'jwt-decode';
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -30,12 +32,29 @@ class Home extends Component {
                 console.error('Error fetching products:', error);
             });
     }
-
-    addToCart = (product) => {
-        const { _id: productId, userId } = product;
-        const quantity = 1; // You can set the quantity as needed
+    addToCart = (productId, quantity) => {
+        // Retrieve token from localStorage
+        const token = localStorage.getItem('token');
     
-        axios.post('http://localhost:3000/addToCart', { userId, productId, quantity })
+        // Check if token is available
+        if (!token) {
+            console.error('Token not found. User may not be logged in.');
+            return; // Optionally handle this case
+        }
+    
+        // Decode the token to extract user information
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
+    
+        // Create payload including userId
+        const payload = {
+            userId: userId,
+            productId: productId,
+            quantity: quantity
+        };
+    
+        // Make request to addToCart endpoint with the userId
+        axios.post('http://localhost:3000/addToCart', payload)
             .then(response => {
                 // Handle success
                 console.log('Product added to cart:', productId);
@@ -46,7 +65,30 @@ class Home extends Component {
             });
     }
     
+    addToWishlist = (productId) => {
+        const token = localStorage.getItem('token');
     
+        if (!token) {
+            console.error('Token not found. User may not be logged in.');
+            return;
+        }
+    
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
+    
+        const payload = {
+            userId: userId,
+            productId: productId
+        };
+    
+        axios.post('http://localhost:3000/addToWishlist', payload)
+            .then(response => {
+                console.log('Product added to wishlist:', productId);
+            })
+            .catch(error => {
+                console.error('Error adding product to wishlist:', error);
+            });
+    }
 
     render() {
         const { products } = this.state;
@@ -84,36 +126,19 @@ class Home extends Component {
                 }
             ]
         };
-        
-        return (
+
+        return(
             <>
                 <Header />
-                <div>
-                    {/* Render featured products */}
-                    <div className="bg-light-2 pt-4 pb-5 featured mt-5 mb-5">
-    <div className="container-fluid">
-        <div className="heading heading-center mb-2">
-            <h2 className="title">FEATURED PRODUCTS</h2>
-        </div>
-        <Slider {...settings}>
-            {products.map(product => (
-                <div className="product product-7 text-center" key={product._id}>
-                    {/* Add container for image and button */}
-                    <div className="product-image-container" style={{ position: 'relative' }}>
-                        {/* Product Image */}
-                        <img src={product.image} alt={product.name} />
-                        {/* Transparent Add to Cart Button */}
-                        <div className="add-to-cart-btn-container">
-                            <button className="btn btn-transparent" onClick={() => this.addToCart(product)}>Add to Cart</button>
-                        </div>
+                <div className="bg-light-2 pt-4 pb-5 featured mt-5 mb-5">
+                <div className="container-fluid">
+                    <div className="heading heading-center mb-2">
+                        <h2 className="title">FEATURED PRODUCTS</h2>
                     </div>
-                    {/* Product Name */}
-                    <h3>{product.name}</h3>
+                    {/* Use Slider component with settings */}
+                  
                 </div>
-            ))}
-        </Slider>
-    </div>
-</div>
+          
 
                     {/* Render trending products */}
                     <div className="banner-group-1 product_news mt-5 mb-5 mt-4">
@@ -133,7 +158,26 @@ class Home extends Component {
                                     }
                                 }'>
 
-                         
+<Slider {...settings}>
+                                {/* Map through products array */}
+                                {products.map(product => (
+                                    <div className="product product-7 text-center" key={product._id}>
+                                        {/* Container for image and button */}
+                                        <div className="product-image-container" style={{ position: 'relative' }}>
+                                            {/* Product Image */}
+                                            <img src={product.image} alt={product.name} />
+                                            {/* Transparent Add to Cart Button */}
+                                            <div className="add-to-cart-btn-container">
+                                                <button className="btn btn-transparent" onClick={() => this.addToCart(product._id, 1)}>Add to Cart</button>
+                                                <button className="btn btn-transparent" onClick={() => this.addToWishlist(product._id)}>Add to Wishlist</button>
+
+                                            </div>
+                                        </div>
+                                        {/* Product Name */}
+                                        <h3>{product.name}</h3>
+                                    </div>
+                                ))}
+                            </Slider>
                                 
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../assets/css/bootstrap.min.css";
 import "../assets/css/style.css";
 import Header from "./header";
@@ -8,6 +9,8 @@ const Login = () => {
   const [activeTab, setActiveTab] = useState("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -15,7 +18,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
@@ -27,10 +30,17 @@ const Login = () => {
           password,
         }),
       });
-
+  
       if (response.ok) {
-        // Handle successful login
-        console.log("Login successful!");
+        // Extract token from response
+        const data = await response.json();
+        const token = data.token;
+  
+        // Save token to localStorage
+        localStorage.setItem("token", token);
+  
+        // Navigate to the home page
+        navigate('/home');
       } else {
         // Handle failed login
         console.error("Login failed");
@@ -39,6 +49,9 @@ const Login = () => {
       console.error("Error logging in:", error);
     }
   };
+  
+  
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
@@ -57,6 +70,7 @@ const Login = () => {
       if (response.ok) {
         // Handle successful signup
         console.log("Signup successful!");
+        navigate('/login'); // Navigate to the home page
       } else {
         // Handle failed signup
         console.error("Signup failed");
@@ -65,6 +79,7 @@ const Login = () => {
       console.error("Error signing up:", error);
     }
   };
+
 
   return (
     <>
