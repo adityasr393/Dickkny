@@ -18,9 +18,11 @@ import MyAddress from './components/myadddress';
 import Bulkinquery from './components/bulkinquery';
 import Checkout from './components/checkout';
 import Product from './components/product';
+import { AuthProvider } from './components/useAuth';
 
 function App() {
   return (
+    <AuthProvider>
     <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -46,6 +48,7 @@ function App() {
         </Routes>
    
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 

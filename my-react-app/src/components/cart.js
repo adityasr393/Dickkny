@@ -4,7 +4,7 @@ import "../assets/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "../assets/css/style.css"; // Import custom styles
 import Header from './header'; // Import Header component
 import Footer from './footer'; // Import Footer component
-
+import { Link } from 'react-router-dom';
 const Cart = () => {
     // Define state variables using useState hook
     const [cartData, setCartData] = useState(null); // State variable for cart data

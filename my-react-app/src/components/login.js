@@ -4,12 +4,13 @@ import "../assets/css/bootstrap.min.css";
 import "../assets/css/style.css";
 import Header from "./header";
 import Footer from "./footer";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [activeTab, setActiveTab] = useState("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleTabChange = (tab) => {
@@ -43,18 +44,19 @@ const Login = () => {
         navigate('/home');
       } else {
         // Handle failed login
-        console.error("Login failed");
+        const errorData = await response.json();
+        const errorMessage = errorData.error || "Invalid email or password";
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error("Error logging in:", error);
+      toast.error("Error logging in");
     }
   };
-  
-  
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:3000/signup", {
         method: "POST",
@@ -66,23 +68,26 @@ const Login = () => {
           password,
         }),
       });
-
+  
       if (response.ok) {
         // Handle successful signup
         console.log("Signup successful!");
-        navigate('/login'); // Navigate to the home page
+        navigate('/login'); // Navigate to the login page
       } else {
         // Handle failed signup
-        console.error("Signup failed");
+        const errorData = await response.json();
+        const errorMessage = errorData.error || "Failed to sign up";
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error("Error signing up:", error);
+      toast.error("Error signing up");
     }
   };
 
-
   return (
     <>
+    <ToastContainer />
       <Header />
       <main className="main">
         <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
